@@ -21,18 +21,18 @@ class _OtpState extends State<Otp> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        margin: EdgeInsets.only(left: 31.0, top: 100.0, right: 31.0),
+        margin: const EdgeInsets.only(left: 31.0, top: 100.0, right: 31.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
+            const Text(
               'Confirm OTP Code',
               style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w700),
             ),
             SizedBox(
               height: height * 0.03,
             ),
-            Text(
+            const Text(
               'Enter OTP sent from SMS to your AADHAR registered mobile number.',
               style: TextStyle(color: Colors.grey, fontSize: 16.0),
             ),
@@ -55,10 +55,10 @@ class _OtpState extends State<Otp> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                  // Navigator.push(context,
+                  //   MaterialPageRoute(builder: (context) => HomePage()));
                 },
-                child: Text('Splash'))
+                child: Text('Verify'))
           ],
         ),
       ),

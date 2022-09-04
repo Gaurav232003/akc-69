@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sarv_swasthya/screens/hospital_login.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../changes/authentication.service.dart';
+import '../changes/database.notifier.dart';
 import 'otp.dart';
 
 class Boarding extends StatefulWidget {
@@ -13,24 +16,17 @@ class Boarding extends StatefulWidget {
 
 class _BoardingState extends State<Boarding> {
   void _printLatestValue() {
-    print('Second text field: ${myController.text}');
+    print('Second text field: ${_aadharNumber.text}');
   }
 
-  final myController = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    myController.addListener(_printLatestValue);
-  }
-
-  @override
-  void dispose() {
-    myController.dispose();
-    super.dispose();
-  }
+  final _aadharNumber = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationNotifier authenticationNotifier =
+        Provider.of<AuthenticationNotifier>(context, listen: false);
+    final DatabaseNotifier databaseNotifier =
+        Provider.of<DatabaseNotifier>(context, listen: false);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var img_height = height * 0.35;
@@ -38,7 +34,7 @@ class _BoardingState extends State<Boarding> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        margin: EdgeInsets.only(left: 31.0, top: 00.0, right: 31.0),
+        margin: const EdgeInsets.only(left: 31.0, top: 00.0, right: 31.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,7 +42,7 @@ class _BoardingState extends State<Boarding> {
               SizedBox(
                 height: height * 0.05,
               ),
-              Text(
+              const Text(
                 'Welcome',
                 style: TextStyle(
                     color: Colors.black,
@@ -64,7 +60,7 @@ class _BoardingState extends State<Boarding> {
               SizedBox(
                 height: height * 0.01,
               ),
-              Text(
+              const Text(
                 'Login',
                 style: TextStyle(
                     color: Colors.black,
@@ -77,13 +73,14 @@ class _BoardingState extends State<Boarding> {
               SizedBox(
                 height: height * 0.05,
                 child: TextField(
-                  controller: myController,
+                  controller: _aadharNumber,
                   autofocus: false,
                   textAlign: TextAlign.left,
                   textAlignVertical: TextAlignVertical.center,
                   decoration: InputDecoration(
                     hintText: 'AADHAR Number',
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
+                    hintStyle:
+                        const TextStyle(color: Colors.grey, fontSize: 12.0),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           width: width * 0.002,
@@ -94,13 +91,20 @@ class _BoardingState extends State<Boarding> {
               ),
               SizedBox(height: height * 0.01),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Otp()),
-                  );
+                onPressed: () async {
+                  String? phoneNumber = await databaseNotifier.getNumber(
+                      context: context, aadharNumber: _aadharNumber.text);
+                  print(phoneNumber);
+                  if (phoneNumber != null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const Otp()));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            "Login Failed : Aadhar Number Doesn't Exist")));
+                  }
                 },
-                child: Text(
+                child: const Text(
                   'LOG IN',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -115,10 +119,10 @@ class _BoardingState extends State<Boarding> {
                     width: width * 0.35,
                     height: height * 0.0015,
                     child: const DecoratedBox(
-                      decoration: const BoxDecoration(color: Colors.black),
+                      decoration: BoxDecoration(color: Colors.black),
                     ),
                   ),
-                  Text(
+                  const Text(
                     'OR',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -126,7 +130,7 @@ class _BoardingState extends State<Boarding> {
                     width: width * 0.35,
                     height: height * 0.0015,
                     child: const DecoratedBox(
-                      decoration: const BoxDecoration(color: Colors.black),
+                      decoration: BoxDecoration(color: Colors.black),
                     ),
                   ),
                 ],
@@ -136,13 +140,14 @@ class _BoardingState extends State<Boarding> {
               ),
               Center(
                 child: InkWell(
-                  child: Text(
+                  child: const Text(
                     'Login as a hospital',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HospitalLogin()),
+                    MaterialPageRoute(
+                        builder: (context) => const HospitalLogin()),
                   ),
                 ),
               ),

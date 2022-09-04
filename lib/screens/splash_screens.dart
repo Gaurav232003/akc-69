@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -59,7 +58,7 @@ class _SplashScreensState extends State<SplashScreens> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Sarv Swasthya',
                       style: TextStyle(
                           fontSize: 32.0, fontWeight: FontWeight.w800),
@@ -100,7 +99,8 @@ class _SplashScreensState extends State<SplashScreens> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 31.0, top: 100.0, right: 31.0),
+                margin:
+                    const EdgeInsets.only(left: 31.0, top: 100.0, right: 31.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -145,11 +145,12 @@ class _SplashScreensState extends State<SplashScreens> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 31.0, top: 100.0, right: 31.0),
+                margin:
+                    const EdgeInsets.only(left: 31.0, top: 100.0, right: 31.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Sarv Swasthya',
                       style: TextStyle(
                           fontSize: 32.0, fontWeight: FontWeight.w800),
@@ -204,7 +205,7 @@ class _SplashScreensState extends State<SplashScreens> {
                       effect: WormEffect(),
                       onDotClicked: (index) => _pageController.animateToPage(
                           index,
-                          duration: Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 500),
                           curve: Curves.bounceOut)),
                 ),
               )
