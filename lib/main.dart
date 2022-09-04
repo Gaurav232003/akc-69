@@ -15,7 +15,8 @@ class SarvSwasthya extends StatefulWidget {
 class _SarvSwasthyaState extends State<SarvSwasthya> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'Proxima Nova'),
       debugShowCheckedModeBanner: false,
       home: Splash(),
     );
